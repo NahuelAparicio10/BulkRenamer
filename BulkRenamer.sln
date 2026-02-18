@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{38EBE64D-201E-4AAE-86F4-85D38BEB9E11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulkRenamer", "src\BulkRenamer\BulkRenamer.csproj", "{88536A26-2AE6-4B21-BF63-20BA8F7E8343}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1A0A115A-7D5D-4FE4-AEA8-38A9AF8561E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulkRenamer.Tests", "tests\BulkRenamer.Tests\BulkRenamer.Tests.csproj", "{5EA6C7AE-37CF-42F1-AAE2-18A60DF2294E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88536A26-2AE6-4B21-BF63-20BA8F7E8343}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88536A26-2AE6-4B21-BF63-20BA8F7E8343}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88536A26-2AE6-4B21-BF63-20BA8F7E8343}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88536A26-2AE6-4B21-BF63-20BA8F7E8343}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EA6C7AE-37CF-42F1-AAE2-18A60DF2294E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EA6C7AE-37CF-42F1-AAE2-18A60DF2294E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EA6C7AE-37CF-42F1-AAE2-18A60DF2294E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EA6C7AE-37CF-42F1-AAE2-18A60DF2294E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{88536A26-2AE6-4B21-BF63-20BA8F7E8343} = {38EBE64D-201E-4AAE-86F4-85D38BEB9E11}
+		{5EA6C7AE-37CF-42F1-AAE2-18A60DF2294E} = {1A0A115A-7D5D-4FE4-AEA8-38A9AF8561E1}
+	EndGlobalSection
+EndGlobal

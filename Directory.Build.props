@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <!-- Enforce nullable reference types and treat warnings as errors across all projects -->
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <LangVersion>latest</LangVersion>
+    <Authors>Nahuel Aparicio (NaguCode)</Authors>
+    <Copyright>Copyright © 2025 Nahuel Aparicio (NaguCode)</Copyright>
+  </PropertyGroup>
+</Project>
