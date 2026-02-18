@@ -39,11 +39,8 @@ public sealed class RenameService : IRenameService
 
         foreach (var preview in previews)
         {
-            if (settings.SkipIfNoChange && preview.Status == RenamePreviewStatus.NoChange)
-                continue;
-
-            if (settings.SkipIfNameCollision && preview.Status == RenamePreviewStatus.Collision)
-                continue;
+            if (settings.SkipIfNoChange && preview.Status == RenamePreviewStatus.NoChange) continue;
+            if (settings.SkipIfNameCollision && preview.Status == RenamePreviewStatus.Collision) continue;
 
             var extension  = Path.GetExtension(preview.FullPath);
             var directory  = Path.GetDirectoryName(preview.FullPath) ?? string.Empty;

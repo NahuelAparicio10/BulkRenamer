@@ -10,7 +10,7 @@ public sealed class RenameSettings
 
     public ScopeMode Scope { get; init; } = ScopeMode.Folder;
 
-    //Absolute path of the root folder to scan.
+    // Absolute path of the root folder to scan.
     public string FolderPath { get; init; } = string.Empty;
 
     public bool IncludeSubfolders { get; init; } = true;
