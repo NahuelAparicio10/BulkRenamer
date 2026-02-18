@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.IO;
+using System.Text.RegularExpressions;
 using BulkRenamer.Core.Enums;
 using BulkRenamer.Core.Models;
 
@@ -122,8 +123,6 @@ public sealed class RenameService : IRenameService
             _                    => settings.FindText
         };
 
-
-
         try
         {
             return Regex.Replace(oldName, pattern, settings.ReplaceText ?? string.Empty, options);
@@ -131,7 +130,6 @@ public sealed class RenameService : IRenameService
         catch (ArgumentException)
         {
             // Return original name if the pattern is invalid.
-            // The ViewModel is responsible for surfacing the validation error to the user.
             return oldName;
         }
     }
@@ -141,12 +139,10 @@ public sealed class RenameService : IRenameService
 
     private static string ReplaceAnywhere(string input, string find, string replace, StringComparison comparison)
     {
-        if (string.IsNullOrEmpty(find))
-            return input;
+        if (string.IsNullOrEmpty(find)) return input;
 
         // Use the fast built-in overload for ordinal (case-sensitive) replacements.
-        if (comparison == StringComparison.Ordinal)
-            return input.Replace(find, replace, StringComparison.Ordinal);
+        if (comparison == StringComparison.Ordinal) return input.Replace(find, replace, StringComparison.Ordinal);
 
         // Fall back to Regex for case-insensitive plain-text replace.
         return Regex.Replace(input, Regex.Escape(find), replace ?? string.Empty, RegexOptions.IgnoreCase);
