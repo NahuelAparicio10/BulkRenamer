@@ -13,6 +13,8 @@ public sealed class MainViewModel : ViewModelBase
     private readonly IRenameService     _renameService;
     private readonly IFileSystemService _fileSystemService;
 
+    #region Scope
+
     private string _folderPath = string.Empty;
     public string FolderPath
     {
@@ -34,6 +36,25 @@ public sealed class MainViewModel : ViewModelBase
                 RebuildPreview();
         }
     }
+
+    #endregion
+
+    #region Extension Filter
+
+    private string _extensionFilter = string.Empty;
+    public string ExtensionFilter
+    {
+        get => _extensionFilter;
+        set
+        {
+            if (SetProperty(ref _extensionFilter, value))
+                RebuildPreview();
+        }
+    }
+
+    #endregion
+
+    #region Filter
 
     private bool _useFilter;
     public bool UseFilter
@@ -67,6 +88,10 @@ public sealed class MainViewModel : ViewModelBase
                 RebuildPreview();
         }
     }
+
+    #endregion
+
+    #region Replace
 
     private ReplaceMode _replaceMode = ReplaceMode.PlainText;
     public ReplaceMode ReplaceMode
@@ -123,6 +148,10 @@ public sealed class MainViewModel : ViewModelBase
         }
     }
 
+    #endregion
+
+    #region Safety
+
     private bool _previewOnly = true;
     public bool PreviewOnly
     {
@@ -152,6 +181,27 @@ public sealed class MainViewModel : ViewModelBase
         }
     }
 
+    #endregion
+
+    #region WhiteSpaces
+
+    private bool _replaceWhitespace;
+    public bool ReplaceWhitespace
+    {
+        get => _replaceWhitespace;
+        set { if (SetProperty(ref _replaceWhitespace, value)) RebuildPreview(); }
+    }
+
+    private string _whitespaceReplacement = "_";
+    public string WhitespaceReplacement
+    {
+        get => _whitespaceReplacement;
+        set { if (SetProperty(ref _whitespaceReplacement, value)) RebuildPreview(); }
+    }
+
+    #endregion
+
+    #region Status
     private string _statusMessage = string.Empty;
     public string StatusMessage
     {
@@ -159,19 +209,19 @@ public sealed class MainViewModel : ViewModelBase
         set => SetProperty(ref _statusMessage, value);
     }
 
-    private string _regexError = string.Empty;
-    public string RegexError
-    {
-        get => _regexError;
-        set => SetProperty(ref _regexError, value);
-    }
+    #endregion
 
-    /// Observable collection so the ListView updates automatically when previews change.
+    #region Preview List
+
+    // Observable collection so the ListView updates automatically when previews change.
     public ObservableCollection<RenamePreview> Previews { get; } = new();
 
-    public ICommand BrowseFolderCommand  { get; }
+    // ── Commands
+    public ICommand BrowseFolderCommand   { get; }
     public ICommand RebuildPreviewCommand { get; }
-    public ICommand ApplyRenameCommand   { get; }
+    public ICommand ApplyRenameCommand    { get; }
+
+    // ── Constructor
 
     public MainViewModel(IRenameService renameService, IFileSystemService fileSystemService)
     {
@@ -183,27 +233,24 @@ public sealed class MainViewModel : ViewModelBase
         ApplyRenameCommand    = new RelayCommand(ApplyRename, CanApplyRename);
     }
 
+    // ── Command Handlers
+
     private void BrowseFolder()
     {
-        // FolderBrowserDialog lives in WPF/WinForms — we use the modern
-        // Windows.Forms version since WPF has no built-in folder picker.
         var dialog = new System.Windows.Forms.FolderBrowserDialog
         {
-            Description = "Select the folder to rename files in",
+            Description            = "Select the folder to rename files in",
             UseDescriptionForTitle = true
         };
 
         if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-        {
             FolderPath = dialog.SelectedPath;
-        }
     }
 
     private void RebuildPreview()
     {
         Previews.Clear();
-        RegexError     = string.Empty;
-        StatusMessage  = string.Empty;
+        StatusMessage = string.Empty;
 
         if (!_fileSystemService.DirectoryExists(FolderPath))
         {
@@ -211,14 +258,12 @@ public sealed class MainViewModel : ViewModelBase
             return;
         }
 
-        var files    = _fileSystemService.GetFiles(FolderPath, IncludeSubfolders);
+        var files    = _fileSystemService.GetFiles(FolderPath, IncludeSubfolders, ExtensionFilter);
         var settings = BuildSettings();
         var previews = _renameService.BuildPreview(files, settings);
 
         foreach (var preview in previews)
-        {
             Previews.Add(preview);
-        }
 
         StatusMessage = $"{Previews.Count} file(s) in preview.";
         RelayCommand.RaiseCanExecuteChanged();
@@ -241,19 +286,30 @@ public sealed class MainViewModel : ViewModelBase
 
     private bool CanApplyRename() => Previews.Count > 0;
 
+
+    #endregion
+
+    #region Helpers
+
     private RenameSettings BuildSettings() => new()
     {
-        FolderPath = FolderPath,
-        IncludeSubfolders = IncludeSubfolders,
-        UseFilter = UseFilter,
-        FilterMatch = FilterMatch,
-        FilterText = FilterText,
-        ReplaceMode = ReplaceMode,
-        ApplyMode = ApplyMode,
-        CaseSensitive = CaseSensitive,
-        FindText = FindText,
-        ReplaceText = ReplaceText,
-        SkipIfNoChange = SkipIfNoChange,
-        SkipIfNameCollision = SkipIfNameCollision
+        FolderPath            = FolderPath,
+        IncludeSubfolders     = IncludeSubfolders,
+        ExtensionFilter       = ExtensionFilter,
+        UseFilter             = UseFilter,
+        FilterMatch           = FilterMatch,
+        FilterText            = FilterText,
+        ReplaceMode           = ReplaceMode,
+        ApplyMode             = ApplyMode,
+        CaseSensitive         = CaseSensitive,
+        FindText              = FindText,
+        ReplaceText           = ReplaceText,
+        ReplaceWhitespace     = ReplaceWhitespace,
+        WhitespaceReplacement = WhitespaceReplacement,
+        SkipIfNoChange        = SkipIfNoChange,
+        SkipIfNameCollision   = SkipIfNameCollision
     };
+
+    #endregion
+
 }

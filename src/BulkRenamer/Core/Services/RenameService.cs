@@ -21,8 +21,7 @@ public sealed class RenameService : IRenameService
         {
             var oldName = Path.GetFileNameWithoutExtension(fullPath);
 
-            if (settings.UseFilter && !MatchesFilter(oldName, settings))
-                continue;
+            if (settings.UseFilter && !MatchesFilter(oldName, settings)) continue;
 
             var newName = ComputeNewName(oldName, settings);
             var status  = ResolveStatus(fullPath, oldName, newName, existingNames, settings);
@@ -89,7 +88,10 @@ public sealed class RenameService : IRenameService
     {
         if (string.IsNullOrEmpty(oldName)) return oldName;
 
-        return settings.ReplaceMode == ReplaceMode.Regex ? ComputeRegex(oldName, settings) : ComputePlain(oldName, settings);
+        var name = settings.ReplaceMode == ReplaceMode.Regex ? ComputeRegex(oldName, settings) : ComputePlain(oldName, settings);
+
+        if (settings.ReplaceWhitespace && name.Contains(' ')) name = name.Replace(" ", settings.WhitespaceReplacement ?? string.Empty);
+        return name;
     }
 
     private static string ComputePlain(string oldName, RenameSettings settings)
@@ -175,7 +177,7 @@ public sealed class RenameService : IRenameService
         return RenamePreviewStatus.WillRename;
     }
 
-    /// Builds a lookup of folder → existing file names (without extension).
+    // Builds a lookup of folder → existing file names (without extension).
     private static Dictionary<string, HashSet<string>> BuildExistingNamesLookup(IEnumerable<string> files)
     {
         var lookup = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);

@@ -19,6 +19,8 @@ public sealed class RenameSettings
 
     #region Filter
 
+    public string ExtensionFilter { get; init; } = string.Empty;
+
     public bool UseFilter { get; init; }
     public MatchMode FilterMatch { get; init; } = MatchMode.Contains;
     public string FilterText { get; init; } = string.Empty;
@@ -32,6 +34,13 @@ public sealed class RenameSettings
     public bool CaseSensitive { get; init; } = true;
     public string FindText { get; init; } = string.Empty;
     public string ReplaceText { get; init; } = string.Empty;
+
+    #endregion
+    #region WhiteSpace
+
+    public bool ReplaceWhitespace { get; init; }
+
+    public string WhitespaceReplacement { get; init; } = "_";
 
     #endregion
 
