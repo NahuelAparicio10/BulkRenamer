@@ -5,7 +5,7 @@
         xmlns:models="clr-namespace:BulkRenamer.Core.Models"
         Title="Bulk Renamer"
         MinWidth="820" MinHeight="540"
-        Width="900"   Height="620"
+        Width="900"   Height="680"
         Background="#1E1E1E">
 
     <Window.Resources>
@@ -222,6 +222,8 @@
                 <TextBlock Text="REPLACE" Style="{StaticResource SectionHeader}"/>
                 <Border Style="{StaticResource PanelBox}">
                     <StackPanel>
+
+                        <!-- Find / Replace -->
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                             <TextBlock Text="Mode" Style="{StaticResource FieldLabel}"/>
                             <ComboBox Width="140"
@@ -251,12 +253,28 @@
                         <!-- Divider -->
                         <Border BorderBrush="#444444" BorderThickness="0,1,0,0" Margin="0,0,0,10"/>
 
-                        <!-- Whitespace replace -->
+                        <!-- Prefix / Suffix -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                            <TextBlock Text="Add Prefix" Style="{StaticResource FieldLabel}"/>
+                            <TextBox Width="140"
+                                     Text="{Binding AddPrefix, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="Prepended to every file name e.g. SFX_"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                            <TextBlock Text="Add Suffix" Style="{StaticResource FieldLabel}"/>
+                            <TextBox Width="140"
+                                     Text="{Binding AddSuffix, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="Appended to every file name e.g. _v2"/>
+                        </StackPanel>
+
+                        <!-- Divider -->
+                        <Border BorderBrush="#444444" BorderThickness="0,1,0,0" Margin="0,0,0,10"/>
+
+                        <!-- Replace spaces -->
                         <CheckBox Content="Replace Spaces"
                                   IsChecked="{Binding ReplaceWhitespace}"
                                   Margin="0,0,0,6"/>
-                        <StackPanel Orientation="Horizontal"
-                                    IsEnabled="{Binding ReplaceWhitespace}">
+                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ReplaceWhitespace}">
                             <TextBlock Text="Replace With" Style="{StaticResource FieldLabel}"/>
                             <TextBox Width="80"
                                      Text="{Binding WhitespaceReplacement, UpdateSourceTrigger=PropertyChanged}"

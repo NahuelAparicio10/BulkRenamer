@@ -150,6 +150,24 @@ public sealed class MainViewModel : ViewModelBase
 
     #endregion
 
+    #region Prefix & Suffix
+
+    private string _addPrefix = string.Empty;
+    public string AddPrefix
+    {
+        get => _addPrefix;
+        set { if (SetProperty(ref _addPrefix, value)) RebuildPreview(); }
+    }
+
+    private string _addSuffix = string.Empty;
+    public string AddSuffix
+    {
+        get => _addSuffix;
+        set { if (SetProperty(ref _addSuffix, value)) RebuildPreview(); }
+    }
+
+    #endregion
+
     #region Safety
 
     private bool _previewOnly = true;
@@ -202,6 +220,7 @@ public sealed class MainViewModel : ViewModelBase
     #endregion
 
     #region Status
+
     private string _statusMessage = string.Empty;
     public string StatusMessage
     {
@@ -286,7 +305,6 @@ public sealed class MainViewModel : ViewModelBase
 
     private bool CanApplyRename() => Previews.Count > 0;
 
-
     #endregion
 
     #region Helpers
@@ -304,6 +322,8 @@ public sealed class MainViewModel : ViewModelBase
         CaseSensitive         = CaseSensitive,
         FindText              = FindText,
         ReplaceText           = ReplaceText,
+        AddPrefix             = AddPrefix,
+        AddSuffix             = AddSuffix,
         ReplaceWhitespace     = ReplaceWhitespace,
         WhitespaceReplacement = WhitespaceReplacement,
         SkipIfNoChange        = SkipIfNoChange,

@@ -36,6 +36,15 @@ public sealed class RenameSettings
     public string ReplaceText { get; init; } = string.Empty;
 
     #endregion
+
+    #region Prefix & Suffix
+
+    public string AddPrefix { get; init; } = string.Empty;
+
+    public string AddSuffix { get; init; } = string.Empty;
+
+    #endregion
+
     #region WhiteSpace
 
     public bool ReplaceWhitespace { get; init; }

@@ -84,13 +84,24 @@ public sealed class RenameService : IRenameService
 
     #region Name Computation
 
-   private static string ComputeNewName(string oldName, RenameSettings settings)
+    private static string ComputeNewName(string oldName, RenameSettings settings)
     {
         if (string.IsNullOrEmpty(oldName)) return oldName;
 
+        // Step 1 — find / replace
         var name = settings.ReplaceMode == ReplaceMode.Regex ? ComputeRegex(oldName, settings) : ComputePlain(oldName, settings);
 
+        // Step 2 — prepend prefix
+        if (!string.IsNullOrEmpty(settings.AddPrefix))
+            name = settings.AddPrefix + name;
+
+        // Step 3 — append suffix
+        if (!string.IsNullOrEmpty(settings.AddSuffix))
+            name = name + settings.AddSuffix;
+
+        // Step 4 — replace whitespace
         if (settings.ReplaceWhitespace && name.Contains(' ')) name = name.Replace(" ", settings.WhitespaceReplacement ?? string.Empty);
+
         return name;
     }
 
@@ -132,7 +143,8 @@ public sealed class RenameService : IRenameService
             return oldName;
         }
     }
-#endregion
+
+    #endregion
 
     #region Plain text Replace Helpers
 
@@ -160,7 +172,6 @@ public sealed class RenameService : IRenameService
 
         return input.EndsWith(find, comparison) ? input[..^find.Length] + (replace ?? string.Empty) : input;
     }
-
 
     #endregion
 
