@@ -1,10 +1,17 @@
-# BulkRenamer
+# Bulk Renamer
 A Windows desktop application for batch-renaming files of any type of audio, images, text, 3D assets, and more.
 Inspired by a Unity Editor tool I made for one of my games, rebuilt as a standalone Windows app with .NET 8 + WPF.
 
 ![License](https://img.shields.io/github/license/NahuelAparicio10/BulkRenamer)
 ![.NET](https://img.shields.io/badge/.NET-8.0-purple)
 ![Platform](https://img.shields.io/badge/platform-Windows-blue)
+
+
+## Download
+
+![Release](https://img.shields.io/github/v/release/NahuelAparicio10/BulkRenamer)
+Grab the latest **BulkRenamer.exe** from the [Releases](https://github.com/NahuelAparicio10/BulkRenamer/releases) page.
+No installation required — self-contained Windows executable.
 
 ---
 
